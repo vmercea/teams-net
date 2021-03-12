@@ -7,7 +7,7 @@ function getHtmlTeams(teams){
         <td>${team.name}</td>
         <td>${team.url}</td>
         <td> X   </td>
-        <td> X   </td>
+        
         
 
     </tr>`
