@@ -6,6 +6,10 @@ function getHtmlTeams(teams){
         <td>${team.members}</td>
         <td>${team.name}</td>
         <td>${team.url}</td>
+        <td> X   </td>
+        <td> X   </td>
+        
+
     </tr>`
     }).join("")
     
@@ -36,7 +40,7 @@ function addTeam(team){
 
     });
 }
-function saveTeam{
+function saveTeam() {
     const members = document.querySelector("input[name=members]").value;
     const name = document.querySelector("input[name=name]").value;
     const url = document.querySelector("input[name=url]").value;
@@ -45,7 +49,7 @@ function saveTeam{
             name:name,
             members:members,
             url:url
-        }
+        };
 
         addTeam(team);
 
