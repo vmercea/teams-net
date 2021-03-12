@@ -10,18 +10,6 @@
 
 <body>
 
-
-<fieldset>
-     <legend> Contact</legend>
-     <label> E-mail: <br>
-     <input type ="text" name="email">
-     </label> <br>
-     <label>Phone: <br>
-     <input typa= "text" name="phone">
-     </label>
-</fieldset>
-
-
 <table width = "1000"  border = "2" >
 	<thead>
 		<tr>
@@ -38,7 +26,11 @@
 	</tr>
 </tbody>
 <tfoot>
-
+	<td> <input type="text" name="members" placeholder="enter Members"></td>
+	<td> <input type="text" name="name" placeholder="enter Project Name"></td>
+	<td> <input type="text" name="url" placeholder="enter Project URL"></td>
+	<td><button onclick="saveTeam()">Save</button></td>
+</tr>
 </tfoot>
  
 </table>
