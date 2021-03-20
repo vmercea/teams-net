@@ -6,11 +6,11 @@ function getHtmlTeams(teams){
         <td>${team.members}</td>
         <td>${team.name}</td>
         <td>${team.url}</td>
-        <td> X   </td>
-        
-        
-
-    </tr>`
+        <td>   
+            <a href="#" class="remove-btn" data-id="${team.id}">&#10006;</a>
+            <a href="#" class="edit-btn">&#9998;</a>
+        </td>
+        </tr>`
     }).join("")
     
 }
@@ -21,24 +21,47 @@ function showTeams(teams) {
     tbody.innerHTML = html;
 
 }
-fetch("teams.json")
+function loadTeams(){
+    fetch("http://localhost:3000/tea)ms-json")
     .then(r => r.json())
     .then(teams =>{
         allTeams = teams;
         showTeams(teams);
     });
-
+}
+ loadTeams();
 function addTeam(team){
-    fetch("ädd.json",  {
+    fetch("http://localhost:3000/teams-json/create", {
         metod: "POST",
-        body:JSON.stringify(team)
+        body:JSON.stringify(team),
+        headers: {
+            "Content-Type": "application/json"
+        }
     })
 
     .them(r=>r.json())
     .them(status=> {
-        console.warn("status", status);
+        if (status.success) {
+            window.location.reload();
+        }
 
     });
+}
+function removeTeam(id) {
+    fetch("http://localhost:3000/teams-json/delete", {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ id: id })
+})
+    .them(r=>r.json())
+    .them(status=> {
+        if (status.success) {
+            loadTeams();
+        }
+    });
+
 }
 function saveTeam() {
     const members = document.querySelector("input[name=members]").value;
@@ -54,3 +77,11 @@ function saveTeam() {
         addTeam(team);
 
 }
+document.querySelector("table tbady").addEventListener("click",e => {
+    console.warn('remove?', e.target.matches("a.remove-btn"));
+    if( e.target.matches("a.remove-btn")) {
+        const id = e.target.getAtribute("data-id");
+        console.info("pls remove",id);
+        removeTeam(id);
+    }
+})
