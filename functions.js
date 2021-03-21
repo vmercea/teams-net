@@ -8,7 +8,7 @@ function getHtmlTeams(teams){
         <td>${team.url}</td>
         <td>   
             <a href="#" class="remove-btn" data-id="${team.id}">&#10006;</a>
-            <a href="#" class="edit-btn"data-id="${team.id}" >&#9998;</a>
+            <a href="#" class="edit-btn"data-id="${team.id}">&#9998;</a>
         </td>
         </tr>`
     }).join("")
@@ -22,7 +22,7 @@ function showTeams(teams) {
 
 }
 function loadTeams(){
-    fetch("http://localhost:3000/tea)ms-json")
+    fetch("http://localhost:3000/teams-json") 
     .then(r => r.json())
     .then(teams =>{
         allTeams = teams;
@@ -30,14 +30,15 @@ function loadTeams(){
     });
 }
  loadTeams();
-function addTeam(team){
+function addTeam(team) {
     fetch("http://localhost:3000/teams-json/create", {
-        metod: "POST",
-        body:JSON.stringify(team),
+        method: "POST",
         headers: {
             "Content-Type": "application/json"
-        }
+        },
+        body:JSON.stringify(team),
     })
+
 
     .them(r=>r.json())
     .them(status=> {
