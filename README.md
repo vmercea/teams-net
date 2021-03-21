@@ -1,2 +1,2 @@
-# teams-net
+# teams-networking
 Teams Networking

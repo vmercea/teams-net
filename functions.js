@@ -29,25 +29,24 @@ function loadTeams(){
         showTeams(teams);
     });
 }
+
  loadTeams();
 function addTeam(team) {
     fetch("http://localhost:3000/teams-json/create", {
         method: "POST",
+        body:JSON.stringify(team),
         headers: {
             "Content-Type": "application/json"
-        },
-        body:JSON.stringify(team),
+      }
     })
-
-
-    .them(r=>r.json())
-    .them(status=> {
-        if (status.success) {
+        .them(r => r.json())
+        .them(status=> {
+            if (status.success) {
             window.location.reload();
-        }
+            }
+        });
+    }
 
-    });
-}
 function removeTeam(id) {
     fetch("http://localhost:3000/teams-json/delete", {
   method: "DELETE",
@@ -56,7 +55,7 @@ function removeTeam(id) {
   },
   body: JSON.stringify({ id: id })
 })
-    .them(r=>r.json())
+    .them(r => r.json())
     .them(status=> {
         if (status.success) {
             loadTeams();
@@ -75,18 +74,16 @@ function saveTeam() {
             url:url
         };
 
-        addTeam(team);
-
-}
-document.querySelector("table tbady").addEventListener("click",e => {
-    console.warn('remove?', e.target.matches("a.remove-btn"));
-    if( e.target.matches("a.remove-btn")) {
-        const id = e.target.getAtribute("data-id");
-        console.info("pls remove",id);
-        removeTeam(id);
-    }else if(e.target.matches("a.edit-btn")){
-        const id = e.target.getAtribute("data-id");
-        console.warn("edit", id);
-
+       addTeam(team);
     }
-})
+
+    document.querySelector("table tbady").addEventListener("click",e => {
+        if( e.target.matches("a.remove-btn")) {
+         const id = e.target.getAtribute('data-id');
+         removeTeam(id);
+         }else if(e.target.matches("a.edit-btn")){
+         const id = e.target.getAtribute('data-id');
+         console.warn('edit?', id);
+
+        }
+    })
