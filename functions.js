@@ -8,7 +8,7 @@ function getHtmlTeams(teams){
         <td>${team.url}</td>
         <td>   
             <a href="#" class="remove-btn" data-id="${team.id}">&#10006;</a>
-            <a href="#" class="edit-btn"data-id="${team.id}">&#9998;</a>
+            <a href="#" class="edit-btn" data-id="${team.id}">&#9998;</a>
         </td>
         </tr>`
     }).join("")
@@ -30,7 +30,8 @@ function loadTeams(){
     });
 }
 
- loadTeams();
+loadTeams();
+
 function addTeam(team) {
     fetch("http://localhost:3000/teams-json/create", {
         method: "POST",
@@ -39,51 +40,51 @@ function addTeam(team) {
             "Content-Type": "application/json"
       }
     })
-        .them(r => r.json())
-        .them(status=> {
+        .then(r => r.json())
+        .then(status=> {
             if (status.success) {
             window.location.reload();
             }
         });
-    }
+}
 
 function removeTeam(id) {
     fetch("http://localhost:3000/teams-json/delete", {
-  method: "DELETE",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ id: id })
-})
-    .them(r => r.json())
-    .them(status=> {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: id })
+    })
+    .then(r => r.json())
+    .then(status=> {
         if (status.success) {
             loadTeams();
         }
     });
-
 }
+
 function saveTeam() {
     const members = document.querySelector("input[name=members]").value;
     const name = document.querySelector("input[name=name]").value;
     const url = document.querySelector("input[name=url]").value;
 
-        const team = {
-            name:name,
-            members:members,
-            url:url
-        };
+    const team = {
+        name:name,
+        members:members,
+        url:url
+    };
 
-       addTeam(team);
+    addTean(team);
+}
+
+document.querySelector("table tbody").addEventListener("click", e => {
+    if ( e.target.matches("a.remove-btn")) {
+        const id = e.target.getAttribute('data-id');
+        console.warn('edit?', id);
+        removeTeam(id);
+    } else if (e.target.matches("a.edit-btn")){
+        const id = e.target.getAttribute('data-id');
+        console.warn('edit?', id);
     }
-
-    document.querySelector("table tbady").addEventListener("click",e => {
-        if( e.target.matches("a.remove-btn")) {
-         const id = e.target.getAtribute('data-id');
-         removeTeam(id);
-         }else if(e.target.matches("a.edit-btn")){
-         const id = e.target.getAtribute('data-id');
-         console.warn('edit?', id);
-
-        }
-    })
+})
