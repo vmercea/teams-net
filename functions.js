@@ -75,7 +75,7 @@ function saveTeam() {
         url:url
     };
 
-    addTean(team);
+    addTeam(team);
 }
 
 document.querySelector("table tbody").addEventListener("click", e => {
