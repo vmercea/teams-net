@@ -1,4 +1,5 @@
 let allTeams = [];
+let editId;
 
 function getHtmlTeams(teams){
     return teams.map(team => {
@@ -48,6 +49,22 @@ function addTeam(team) {
         });
 }
 
+function updateTeam(team) {
+    fetch("http://localhost:3000/teams-json/update", {
+        method: "POST",
+        body:JSON.stringify(team),
+        headers: {
+            "Content-Type": "application/json"
+      }
+    })
+        .then(r => r.json())
+        .then(status=> {
+            if (status.success) {
+            window.location.reload();
+            }
+        });
+}
+
 function removeTeam(id) {
     fetch("http://localhost:3000/teams-json/delete", {
         method: "DELETE",
@@ -75,7 +92,13 @@ function saveTeam() {
         url:url
     };
 
-    addTeam(team);
+    if (editId) {
+        team.id = editId;
+        console.warn("update", team, editId);
+        updateTeam(team);
+    } else {
+        addTeam(team);
+    }
 }
 
 document.querySelector("table tbody").addEventListener("click", e => {
@@ -84,17 +107,17 @@ document.querySelector("table tbody").addEventListener("click", e => {
         console.warn('edit?', id);
         removeTeam(id);
     } else if (e.target.matches("a.edit-btn")){
-        const id = e.target.getAttribute('data-id');
-        
+        document.getElementById("saveBtn").innerText = "Update";
 
+        const id = e.target.getAttribute('data-id');
         const editTeam = allTeams.find(team => team.id == id);
         setValues(editTeam);
-      }
-    });
+        editId = id;
+    }
+});
 
-function setValues(editTeam){
+function setValues(team){
     document.querySelector("input[name=members]").value = team.members;
     document.querySelector("input[name=name]").value = team.name;
     document.querySelector("input[name=url]").value = team.url;
-}
-    
+}    
